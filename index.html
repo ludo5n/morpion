@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body> 
+        <div id="container">
+            <section class="joueur" id="joueurX"></section>
+            <section id="morpion"></section>
+            <section class="joueur" id="joueurO"></section>
+        </div>
+        <p id="msg"></p>
+        <button id="restart">Restart</button>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+        
+        <script src="class/Morpion.class.js"></script>
+        <script>
+
+            function clickHandler(){
+                
+                $(this).html(morpion.playCell($(this).attr("id")))
+                $(this).addClass("clicked").off("click")
+
+                if(morpion.hasWinner()){
+                    $(".case").off("click")
+                    $("#restart").show()
+                    displayPlayers(true)
+                    displayMessage("Joueur "+morpion.joueurActuel.symbol+" a gagné !!")
+                    
+                }
+                else if(morpion.isDraw()){
+                    $("#restart").show()
+                    displayMessage("Match nul, les gars !!")
+                }
+                else{
+                    morpion.alternate()
+                    displayMessage("C'est à "+morpion.joueurActuel.symbol+" de jouer !")
+                }
+            }
+            
+            function displayPlayers(win = false){
+
+                $("#joueurX").html(morpion.joueur1.render())
+                $("#joueurO").html(morpion.joueur2.render())
+                if(win){
+                   $("#joueur"+morpion.joueurActuel.symbol+" h2").addClass("winner")
+                }
+            }
+            
+            function displayMessage(msg){
+                $("#msg").html(msg);
+            }
+            
+            let morpion = new Morpion("X", "O", 3);
+            
+            $(document).ready(function(){
+
+                $("#morpion").html(morpion.renderDiv())
+                $("#restart").hide()
+                $(".case").on("click", clickHandler)
+                
+                displayPlayers()
+                displayMessage("BIENVENUE : C'est à "+morpion.joueurActuel.symbol+" de jouer !")
+            })
+            
+            
+            $("#restart").on("click", function(){
+                $(this).hide()
+                
+                morpion.init()
+                
+                $("#morpion").html(morpion.renderDiv())
+                $(".case").removeClass("clicked").on("click", clickHandler)
+
+                displayMessage("Maintenant, c'est à "+morpion.joueurActuel.symbol+" de jouer !")
+            })
+        
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,82 @@
+*{
+	box-sizing: border-box;
+}
+#container {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.joueur h2{
+    
+}
+
+#grille{
+	display: flex;
+	flex-wrap: wrap;
+}
+.case{
+	background-color: #dddddd;
+	width: 6rem;/*16px * 6 = 96px*/
+	height: 6rem;
+	line-height: 6rem;
+	border: 1px solid #888;
+	text-align: center;
+	font-size: 3rem;/*16px x 3 = 48px = 1em*/
+	transition: transform 0.3s;
+}
+.case:hover{
+    transform: scale(1.2);
+}
+.case.clicked{
+    animation-name : clicked;
+    animation-duration: 1s;
+}
+
+@keyframes clicked{
+    from{
+        transform: skew(-90deg, 90deg) scale(1.5);
+        background-color: green; 
+    }
+    to{
+        transform: skew(0deg, 0deg) scale(1); 
+        background-color: #ffffff;
+    }
+}
+
+.joueur, #msg{
+    text-align: center;
+}
+
+.winner{
+    animation-name: win;
+    animation-duration: 3s;
+}
+@keyframes win{
+    from{
+        transform: scale(1);
+        color: #000;
+    }
+    50%{
+        margin-top: 6em;
+        transform: scale(3);
+        text-shadow: 0px 0px 0.5em black;
+        color: #fff;
+        
+    }
+    to{
+        transform: scale(1) rotate(360deg);
+        color: #000;
+        
+    }
+}
+
+@media all and (max-width: 550px){
+    .joueur{
+        order: 0;
+    }
+    #morpion{
+        order: 2;
+    }
+}
