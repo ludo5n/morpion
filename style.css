@@ -6,6 +6,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    margin-top: 50vh;
+    transform: translateY(-50%);
 }
 
 .joueur h2{
